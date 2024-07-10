@@ -1,0 +1,10 @@
+general:
+  root_path: ../../vnncomp2024_benchmarks/benchmarks/cora
+  csv_name: instances.csv
+  complete_verifier: bab
+solver:
+  batch_size: 10240
+  alpha-crown:
+    iteration: 20
+  beta-crown:
+    iteration: 10

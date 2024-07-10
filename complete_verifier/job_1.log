@@ -1,0 +1,2638 @@
+/home/zhouxingshi/miniconda3/envs/torch2.0/lib/python3.10/site-packages/torchvision/transforms/_functional_pil.py:242: DeprecationWarning: BILINEAR is deprecated and will be removed in Pillow 10 (2023-07-01). Use Resampling.BILINEAR instead.
+  interpolation: int = Image.BILINEAR,
+/home/zhouxingshi/miniconda3/envs/torch2.0/lib/python3.10/site-packages/torchvision/transforms/_functional_pil.py:286: DeprecationWarning: NEAREST is deprecated and will be removed in Pillow 10 (2023-07-01). Use Resampling.NEAREST or Dither.NONE instead.
+  interpolation: int = Image.NEAREST,
+/home/zhouxingshi/miniconda3/envs/torch2.0/lib/python3.10/site-packages/torchvision/transforms/_functional_pil.py:319: DeprecationWarning: BICUBIC is deprecated and will be removed in Pillow 10 (2023-07-01). Use Resampling.BICUBIC instead.
+  interpolation: int = Image.BICUBIC,
+Configurations:
+
+general:
+  device: cuda
+  seed: 100
+  conv_mode: matrix
+  deterministic: false
+  double_fp: false
+  loss_reduction_func: sum
+  sparse_alpha: false
+  sparse_interm: false
+  save_adv_example: false
+  eval_adv_example: false
+  show_adv_example: false
+  precompile_jit: false
+  complete_verifier: bab
+  enable_incomplete_verification: true
+  csv_name: instances.csv
+  results_file: /home/zhouxingshi/nfs/experiments/vnncomp/0708/ml4acopf/master/job_0001_0002.pkl
+  root_path: ../../vnncomp2023_benchmarks/benchmarks/ml4acopf
+  deterministic_opt: false
+  graph_optimizer: 'Customized("custom_graph_optimizer", "default_optimizer")'
+  no_batchdim_buffers: true
+model:
+  name: null
+  path: null
+  onnx_path: null
+  onnx_path_prefix: ''
+  cache_onnx_conversion: false
+  debug_onnx: false
+  onnx_quirks: null
+  input_shape: null
+  onnx_loader: default_onnx_and_vnnlib_loader
+  onnx_optimization_flags: [remove_matmul_inplace]
+  onnx_vnnlib_joint_optimization_flags: none
+  check_optmized: false
+  flatten_final_output: false
+data:
+  start: 1
+  end: 2
+  select_instance: null
+  num_outputs: 10
+  mean: 0.0
+  std: 1.0
+  pkl_path: null
+  dataset: null
+  data_filter_path: null
+  data_idx_file: null
+specification:
+  type: lp
+  robustness_type: verified-acc
+  norm: .inf
+  epsilon: null
+  epsilon_min: 0.0
+  vnnlib_path: null
+  vnnlib_path_prefix: ''
+solver:
+  batch_size: 512
+  auto_enlarge_batch_size: false
+  min_batch_size_ratio: 0.0
+  use_float64_in_last_iteration: false
+  early_stop_patience: 10
+  start_save_best: 0.5
+  bound_prop_method: alpha-crown
+  init_bound_prop_method: same
+  prune_after_crown: false
+  crown:
+    batch_size: 1000000000
+    max_crown_size: 1000000000
+  alpha-crown:
+    alpha: true
+    lr_alpha: 0.5
+    iteration: 40
+    share_alphas: false
+    lr_decay: 0.99
+    full_conv_alpha: true
+    max_coeff_mul: .inf
+    matmul_share_alphas: false
+    include_output_constraint: false
+    disable_optimization: [sin, cos]
+  beta-crown:
+    lr_alpha: 0.5
+    lr_beta: 0.05
+    lr_decay: 0.98
+    optimizer: adam
+    iteration: 10
+    beta: true
+    beta_warmup: true
+    enable_opt_interm_bounds: false
+    all_node_split_LP: false
+    alpha_masks: false
+  forward:
+    refine: false
+    dynamic: false
+    max_dim: 10000
+  intermediate_refinement:
+    enabled: false
+    batch_size: 10
+    opt_coeffs: false
+    opt_bias: false
+    lr: 0.05
+    layers: [-1]
+    max_domains: 1000
+  multi_class:
+    label_batch_size: 32
+    skip_with_refined_bound: true
+  mip:
+    parallel_solvers: null
+    solver_threads: 1
+    refine_neuron_timeout: 15
+    refine_neuron_time_percentage: 0.8
+    early_stop: true
+    adv_warmup: true
+    mip_solver: gurobi
+    skip_unsafe: false
+bab:
+  initial_max_domains: 1
+  max_domains: .inf
+  decision_thresh: 0
+  timeout: 360
+  timeout_scale: 1
+  override_timeout: null
+  get_upper_bound: false
+  dfs_percent: 0.0
+  pruning_in_iteration: false
+  pruning_in_iteration_ratio: 0.2
+  sort_targets: false
+  batched_domain_list: true
+  optimized_interm: ''
+  interm_transfer: true
+  cut:
+    enabled: false
+    implication: false
+    bab_cut: false
+    lp_cut: false
+    method: null
+    lr: 0.01
+    lr_decay: 1.0
+    iteration: 100
+    bab_iteration: -1
+    early_stop_patience: -1
+    lr_beta: 0.02
+    number_cuts: 50
+    topk_cuts_in_filter: 1000
+    batch_size_primal: 100
+    max_num: 1000000000
+    patches_cut: false
+    cplex_cuts: false
+    cplex_cuts_wait: 0
+    cplex_cuts_revpickup: true
+    cut_reference_bounds: true
+    fix_intermediate_bounds: false
+    _tmp_cuts: null
+    fixed_cuts: false
+    add_implied_cuts: false
+    add_input_cuts: false
+  branching:
+    method: nonlinear
+    candidates: 3
+    reduceop: min
+    enable_intermediate_bound_opt: false
+    branching_input_and_activation: false
+    branching_input_and_activation_order: [input, relu]
+    sort_domain_interval: 1
+    branching_input_iterations: 30
+    branching_relu_iterations: 50
+    sb_coeff_thresh: 0.001
+    nonlinear_split:
+      method: shortcut
+      branching_point_method: middle
+      num_branches: 2
+      branching_point_refinement: false
+      filter: true
+      filter_beta: false
+      filter_batch_size: 10000
+      filter_iterations: 25
+      faster: true
+      loose_tanh_threshold: null
+      batch_size: 51200
+      shortlist_size: 500
+    new_input_split:
+      enable: false
+      batch_size: 2
+      rounds: 1
+      init_alpha_batch_size: 8192
+      full_alpha: false
+    input_split:
+      enable: false
+      enhanced_bound_prop_method: alpha-crown
+      enhanced_branching_method: naive
+      enhanced_bound_patience: 100000000.0
+      attack_patience: 100000000.0
+      adv_check: 0
+      split_partitions: 2
+      sb_margin_weight: 1.0
+      sb_primary_spec: null
+      sb_primary_spec_iter: 1
+      sb_sum: false
+      ibp_enhancement: false
+      alpha_enhancement: null
+      alpha_enhancement_batch: 2048
+      qp_enhancement: null
+      catch_assertion: false
+  attack:
+    enabled: false
+    beam_candidates: 8
+    beam_depth: 7
+    max_dive_fix_ratio: 0.8
+    min_local_free_ratio: 0.2
+    mip_start_iteration: 5
+    mip_timeout: 30.0
+    adv_pool_threshold: null
+    refined_mip_attacker: false
+    refined_batch_size: null
+attack:
+  pgd_order: before
+  pgd_steps: 100
+  pgd_restarts: 100
+  pgd_batch_size: 100000000
+  pgd_early_stop: true
+  pgd_lr_decay: 0.99
+  pgd_alpha: auto
+  pgd_loss_mode: null
+  enable_mip_attack: false
+  adv_saver: default_adv_saver
+  early_stop_condition: default_early_stop_condition
+  adv_example_finalizer: default_adv_example_finalizer
+  pgd_loss: default_pgd_loss
+  cex_path: ./test_cex.txt
+  attack_mode: PGD
+  attack_tolerance: 0.0001
+  attack_func: attack_with_general_specs
+  gama_lambda: 10.0
+  gama_decay: 0.9
+  check_clean: false
+  input_split:
+    pgd_steps: 100
+    pgd_restarts: 30
+    pgd_alpha: auto
+  input_split_enhanced:
+    pgd_steps: 200
+    pgd_restarts: 500000
+    pgd_alpha: auto
+  input_split_check_adv:
+    pgd_steps: 5
+    pgd_restarts: 5
+    pgd_alpha: auto
+debug:
+  rhs_offset: null
+  lp_test: null
+  rescale_vnnlib_ptb: null
+  test_optimized_bounds: false
+  test_optimized_bounds_after_n_iterations: 0
+
+Experiments at Sat Jul  8 12:01:27 2023 on nova.cs.ucla.edu
+customized start/end sample from instance 1 to 2 in instances.csv
+Internal results will be saved to /home/zhouxingshi/nfs/experiments/vnncomp/0708/ml4acopf/master/job_0001_0002.pkl.
+
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% idx: 0, vnnlib ID: 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Using onnx onnx/118_ieee_ml4acopf.onnx
+Using vnnlib vnnlib/118_ieee_prop4.vnnlib
+Precompiled vnnlib file found at ../../vnncomp2023_benchmarks/benchmarks/ml4acopf/vnnlib/118_ieee_prop4.vnnlib.compiled
+Loading onnx ../../vnncomp2023_benchmarks/benchmarks/ml4acopf/onnx/118_ieee_ml4acopf.onnx wih quirks {}
+Onnx optimization with flag: ['remove_matmul_inplace']
+Found existed optimized onnx model at ../../vnncomp2023_benchmarks/benchmarks/ml4acopf/onnx/118_ieee_ml4acopf.onnx.optimized
+Automatic inference of operator: cos
+Automatic inference of operator: sin
+Automatic inference of operator: neg
+/home/zhouxingshi/onnx2pytorch/onnx2pytorch/convert/model.py:151: UserWarning: Using experimental implementation that allows 'batch_size > 1'.Batchnorm layers could potentially produce false outputs.
+  warnings.warn(
+
+**************************
+Model might not be converted correctly. Please check onnx conversion carefully.
+Output by pytorch: [[ 0.0000000e+00  0.0000000e+00  0.0000000e+00 ... -2.4667978e-03
+   5.6624413e-06  6.5059960e-04]]
+Output by onnx: [[ 0.0000000e+00  0.0000000e+00  0.0000000e+00 ... -2.5246143e-03
+   5.6624413e-06  6.4857304e-04]]
+Max error: tensor(6.16312027e-05)
+**************************
+
+Attack parameters: initialization=uniform, steps=100, restarts=100, alpha=0.03460177779197693, initialization=uniform, GAMA=False
+Model output of first 5 examples:
+ tensor([[ 0.00000000,  0.00000000,  0.00000000,  ...,  0.00069451,
+         -0.00016427,  0.00022870]], device='cuda:0')
+  0%|                                                                                                                 | 0/1 [00:00<?, ?it/s]100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:02<00:00,  2.58s/it]100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:02<00:00,  2.58s/it]
+Adv example prediction (first 2 examples and 2 restarts):
+ tensor([[[ 0.00000000,  0.00000000,  0.00000000,  ..., -0.00444436,
+          -0.00024553, -0.00099571],
+         [ 0.00000000,  0.00000000,  0.00000000,  ..., -0.00444436,
+          -0.00024553, -0.00099571]]], device='cuda:0')
+PGD attack margin (first 2 examles and 10 specs):
+ tensor([[[4.05519009e-02, 7.94501305e-02, 3.31567526e-02, 8.68452787e-02,
+          3.19484472e-02, 8.80535841e-02, 4.05311584e-06, 1.19997978e-01,
+          1.38580799e-03, 1.18616223e-01]]], device='cuda:0')
+number of violation:  0
+Attack finished in 3.4229 seconds.
+PGD attack failed
+/home/zhouxingshi/onnx2pytorch/onnx2pytorch/operations/slice.py:73: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  assert (steps == 1 or steps == -1) and axes == int(axes) and start == int(start) and end == int(end)
+/home/zhouxingshi/onnx2pytorch/onnx2pytorch/operations/slice.py:73: TracerWarning: Converting a tensor to a Python integer might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  assert (steps == 1 or steps == -1) and axes == int(axes) and start == int(start) and end == int(end)
+/home/zhouxingshi/onnx2pytorch/onnx2pytorch/utils.py:21: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  return value.ndim == 0 or value.shape == torch.Size([1])
+/home/zhouxingshi/onnx2pytorch/onnx2pytorch/operations/add.py:34: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  elif all(x == 1 for x in input[0].shape):
+/home/zhouxingshi/onnx2pytorch/onnx2pytorch/operations/gather.py:14: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if indices.numel() == 1 and indices == -1:
+/home/zhouxingshi/onnx2pytorch/onnx2pytorch/operations/constantofshape.py:16: TracerWarning: Iterating over a tensor might cause the trace to be incorrect. Passing a tensor of different shape won't change the number of iterations executed (and might lead to errors or silently give incorrect results).
+  return self.constant.expand(*shape).to(shape.device)
+/home/zhouxingshi/onnx2pytorch/onnx2pytorch/operations/constantofshape.py:16: TracerWarning: Using len to get tensor shape might cause the trace to be incorrect. Recommended usage would be tensor.shape[0]. Passing a tensor of different shape might lead to errors or silently give incorrect results.
+  return self.constant.expand(*shape).to(shape.device)
+/home/zhouxingshi/onnx2pytorch/onnx2pytorch/operations/expand.py:7: TracerWarning: Converting a tensor to a Python boolean might cause the trace to be incorrect. We can't record the data flow of Python values, so this value will be treated as a constant in the future. This means that the trace might not generalize to other inputs!
+  if isinstance(shape, torch.Tensor) and (shape == 1).all():
+/home/zhouxingshi/onnx2pytorch/onnx2pytorch/operations/expand.py:9: TracerWarning: Iterating over a tensor might cause the trace to be incorrect. Passing a tensor of different shape won't change the number of iterations executed (and might lead to errors or silently give incorrect results).
+  torch.Size(shape), dtype=input.dtype, device=input.device)
+/home/zhouxingshi/onnx2pytorch/onnx2pytorch/operations/expand.py:9: TracerWarning: Using len to get tensor shape might cause the trace to be incorrect. Recommended usage would be tensor.shape[0]. Passing a tensor of different shape might lead to errors or silently give incorrect results.
+  torch.Size(shape), dtype=input.dtype, device=input.device)
+/home/zhouxingshi/Verifier_Development/complete_verifier/auto_LiRPA/parse_graph.py:154: FutureWarning: 'torch.onnx.symbolic_helper._set_opset_version' is deprecated in version 1.13 and will be removed in 2.0. Please remove its usage and avoid setting internal variables directly.
+  _set_opset_version(12)
+torch allclose failed: norm 0.0005195647827349603
+Model: BoundedModule(
+  (/0): BoundInput(name=/0, inputs=[], perturbed=True)
+  (/9): BoundBuffers(name=/9, inputs=[], perturbed=False)
+  (/10): BoundBuffers(name=/10, inputs=[], perturbed=False)
+  (/19): BoundParams(name=/19, inputs=[], perturbed=False)
+  (/20): BoundParams(name=/20, inputs=[], perturbed=False)
+  (/21): BoundParams(name=/21, inputs=[], perturbed=False)
+  (/22): BoundParams(name=/22, inputs=[], perturbed=False)
+  (/23): BoundParams(name=/23, inputs=[], perturbed=False)
+  (/24): BoundParams(name=/24, inputs=[], perturbed=False)
+  (/25): BoundParams(name=/25, inputs=[], perturbed=False)
+  (/26): BoundParams(name=/26, inputs=[], perturbed=False)
+  (/59): BoundBuffers(name=/59, inputs=[], perturbed=False)
+  (/60): BoundBuffers(name=/60, inputs=[], perturbed=False)
+  (/61): BoundBuffers(name=/61, inputs=[], perturbed=False)
+  (/62): BoundBuffers(name=/62, inputs=[], perturbed=False)
+  (/63): BoundBuffers(name=/63, inputs=[], perturbed=False)
+  (/64): BoundBuffers(name=/64, inputs=[], perturbed=False)
+  (/65): BoundBuffers(name=/65, inputs=[], perturbed=False)
+  (/66): BoundBuffers(name=/66, inputs=[], perturbed=False)
+  (/67): BoundBuffers(name=/67, inputs=[], perturbed=False)
+  (/68): BoundBuffers(name=/68, inputs=[], perturbed=False)
+  (/69): BoundBuffers(name=/69, inputs=[], perturbed=False)
+  (/70): BoundBuffers(name=/70, inputs=[], perturbed=False)
+  (/71): BoundBuffers(name=/71, inputs=[], perturbed=False)
+  (/72): BoundBuffers(name=/72, inputs=[], perturbed=False)
+  (/73): BoundBuffers(name=/73, inputs=[], perturbed=False)
+  (/74): BoundBuffers(name=/74, inputs=[], perturbed=False)
+  (/shape.1): BoundBuffers(name=/shape.1, inputs=[], perturbed=False)
+  (/76): BoundBuffers(name=/76, inputs=[], perturbed=False)
+  (/77): BoundBuffers(name=/77, inputs=[], perturbed=False)
+  (/78): BoundBuffers(name=/78, inputs=[], perturbed=False)
+  (/shape.5): BoundBuffers(name=/shape.5, inputs=[], perturbed=False)
+  (/80): BoundBuffers(name=/80, inputs=[], perturbed=False)
+  (/81): BoundBuffers(name=/81, inputs=[], perturbed=False)
+  (/82): BoundBuffers(name=/82, inputs=[], perturbed=False)
+  (/83): BoundBuffers(name=/83, inputs=[], perturbed=False)
+  (/84): BoundBuffers(name=/84, inputs=[], perturbed=False)
+  (/85): BoundBuffers(name=/85, inputs=[], perturbed=False)
+  (/86): BoundParams(name=/86, inputs=[], perturbed=False)
+  (/87): BoundParams(name=/87, inputs=[], perturbed=False)
+  (/88): BoundParams(name=/88, inputs=[], perturbed=False)
+  (/89): BoundParams(name=/89, inputs=[], perturbed=False)
+  (/90): BoundParams(name=/90, inputs=[], perturbed=False)
+  (/91): BoundParams(name=/91, inputs=[], perturbed=False)
+  (/92): BoundParams(name=/92, inputs=[], perturbed=False)
+  (/93): BoundParams(name=/93, inputs=[], perturbed=False)
+  (/94): BoundBuffers(name=/94, inputs=[], perturbed=False)
+  (/95): BoundBuffers(name=/95, inputs=[], perturbed=False)
+  (/96): BoundBuffers(name=/96, inputs=[], perturbed=False)
+  (/input): BoundLinear(name=/input, inputs=[/0, /19, /20], perturbed=True)
+  (/98): BoundRelu(name=/98, inputs=[/input], perturbed=True)
+  (/input.3): BoundLinear(name=/input.3, inputs=[/98, /21, /22], perturbed=True)
+  (/100): BoundRelu(name=/100, inputs=[/input.3], perturbed=True)
+  (/input.7): BoundLinear(name=/input.7, inputs=[/100, /23, /24], perturbed=True)
+  (/102): BoundRelu(name=/102, inputs=[/input.7], perturbed=True)
+  (/103): BoundLinear(name=/103, inputs=[/102, /25, /26], perturbed=True)
+  (/104): BoundConstant(name=/104, value=1)
+  (/105): BoundConstant(name=/105, value=0)
+  (/106): BoundConstant(name=/106, value=226)
+  (/107): BoundConstant(name=/107, value=0)
+  (/108): BoundConstant(name=/108, value=226)
+  (/109): BoundAdd(name=/109, inputs=[/107, /108], perturbed=False)
+  (/110): BoundUnsqueeze(name=/110, inputs=[/105], perturbed=False)
+  (/111): BoundUnsqueeze(name=/111, inputs=[/109], perturbed=False)
+  (/112): BoundUnsqueeze(name=/112, inputs=[/104], perturbed=False)
+  (/113): BoundSlice(name=/113, inputs=[/103, /110, /111, /112], perturbed=True)
+  (/114): BoundSigmoid(name=/114, inputs=[/113], perturbed=True)
+  (/115): BoundMul(name=/115, inputs=[/114, /9], perturbed=True)
+  (/116): BoundAdd(name=/116, inputs=[/115, /10], perturbed=True)
+  (/117): BoundConstant(name=/117, value=226)
+  (/118): BoundConstant(name=/118, value=118)
+  (/119): BoundAdd(name=/119, inputs=[/117, /118], perturbed=False)
+  (/120): BoundUnsqueeze(name=/120, inputs=[/106], perturbed=False)
+  (/121): BoundUnsqueeze(name=/121, inputs=[/119], perturbed=False)
+  (/122): BoundUnsqueeze(name=/122, inputs=[/104], perturbed=False)
+  (/123): BoundSlice(name=/123, inputs=[/103, /120, /121, /122], perturbed=True)
+  (/124): BoundConcat(name=/124, inputs=[/116, /123], perturbed=True)
+  (/125): BoundConstant(name=/125, value=99)
+  (/126): BoundConstant(name=/126, value=0)
+  (/127): BoundConstant(name=/127, value=99)
+  (/128): BoundAdd(name=/128, inputs=[/126, /127], perturbed=False)
+  (/129): BoundUnsqueeze(name=/129, inputs=[/105], perturbed=False)
+  (/130): BoundUnsqueeze(name=/130, inputs=[/128], perturbed=False)
+  (/131): BoundUnsqueeze(name=/131, inputs=[/104], perturbed=False)
+  (/132): BoundSlice(name=/132, inputs=[/0, /129, /130, /131], perturbed=True)
+  (/133): BoundConstant(name=/133, value=99)
+  (/134): BoundAdd(name=/134, inputs=[/133, /133], perturbed=False)
+  (/135): BoundUnsqueeze(name=/135, inputs=[/125], perturbed=False)
+  (/136): BoundUnsqueeze(name=/136, inputs=[/134], perturbed=False)
+  (/137): BoundUnsqueeze(name=/137, inputs=[/104], perturbed=False)
+  (/138): BoundSlice(name=/138, inputs=[/0, /135, /136, /137], perturbed=True)
+  (/139): BoundConstant(name=/139, value=54)
+  (/140): BoundConstant(name=/140, value=0)
+  (/141): BoundConstant(name=/141, value=54)
+  (/142): BoundAdd(name=/142, inputs=[/140, /141], perturbed=False)
+  (/143): BoundUnsqueeze(name=/143, inputs=[/105], perturbed=False)
+  (/144): BoundUnsqueeze(name=/144, inputs=[/142], perturbed=False)
+  (/145): BoundUnsqueeze(name=/145, inputs=[/104], perturbed=False)
+  (/146): BoundSlice(name=/146, inputs=[/124, /143, /144, /145], perturbed=True)
+  (/147): BoundConstant(name=/147, value=54)
+  (/148): BoundAdd(name=/148, inputs=[/147, /147], perturbed=False)
+  (/149): BoundUnsqueeze(name=/149, inputs=[/139], perturbed=False)
+  (/150): BoundUnsqueeze(name=/150, inputs=[/148], perturbed=False)
+  (/151): BoundUnsqueeze(name=/151, inputs=[/104], perturbed=False)
+  (/152): BoundSlice(name=/152, inputs=[/124, /149, /150, /151], perturbed=True)
+  (/153): BoundConstant(name=/153, value=108)
+  (/154): BoundConstant(name=/154, value=108)
+  (/155): BoundConstant(name=/155, value=118)
+  (/156): BoundAdd(name=/156, inputs=[/154, /155], perturbed=False)
+  (/157): BoundUnsqueeze(name=/157, inputs=[/153], perturbed=False)
+  (/158): BoundUnsqueeze(name=/158, inputs=[/156], perturbed=False)
+  (/159): BoundUnsqueeze(name=/159, inputs=[/104], perturbed=False)
+  (/160): BoundSlice(name=/160, inputs=[/124, /157, /158, /159], perturbed=True)
+  (/161): BoundConstant(name=/161, value=226)
+  (/162): BoundConstant(name=/162, value=118)
+  (/163): BoundAdd(name=/163, inputs=[/161, /162], perturbed=False)
+  (/164): BoundUnsqueeze(name=/164, inputs=[/106], perturbed=False)
+  (/165): BoundUnsqueeze(name=/165, inputs=[/163], perturbed=False)
+  (/166): BoundUnsqueeze(name=/166, inputs=[/104], perturbed=False)
+  (/167): BoundSlice(name=/167, inputs=[/124, /164, /165, /166], perturbed=True)
+  (/168): BoundCast(name=/168, inputs=[/59], perturbed=False)
+  (/169): BoundGather(name=/169, inputs=[/167, /168], perturbed=True)
+  (/170): BoundCast(name=/170, inputs=[/60], perturbed=False)
+  (/171): BoundGather(name=/171, inputs=[/167, /170], perturbed=True)
+  (/172): BoundSub(name=/172, inputs=[/169, /171], perturbed=True)
+  (/173): BoundCast(name=/173, inputs=[/168], perturbed=False)
+  (/174): BoundGather(name=/174, inputs=[/160, /173], perturbed=True)
+  (/175): BoundCast(name=/175, inputs=[/170], perturbed=False)
+  (/176): BoundGather(name=/176, inputs=[/160, /175], perturbed=True)
+  (/179): BoundCos(name=/179, inputs=[/172], perturbed=True)
+  (/180): BoundSin(name=/180, inputs=[/172], perturbed=True)
+  (/181): BoundMul(name=/181, inputs=[/174, /176], perturbed=True)
+  (/182): BoundMul(name=/182, inputs=[/181, /179], perturbed=True)
+  (/183): BoundMul(name=/183, inputs=[/181, /180], perturbed=True)
+  (/184): BoundNeg(name=/184, inputs=[/183], perturbed=True)
+  (/185): BoundMul(name=/185, inputs=[/63, /177/sqr], perturbed=True)
+  (/186): BoundMul(name=/186, inputs=[/64, /182], perturbed=True)
+  (/187): BoundAdd(name=/187, inputs=[/185, /186], perturbed=True)
+  (/188): BoundMul(name=/188, inputs=[/65, /183], perturbed=True)
+  (/189): BoundAdd(name=/189, inputs=[/187, /188], perturbed=True)
+  (/190): BoundMul(name=/190, inputs=[/66, /177/sqr], perturbed=True)
+  (/191): BoundMul(name=/191, inputs=[/67, /182], perturbed=True)
+  (/192): BoundSub(name=/192, inputs=[/190, /191], perturbed=True)
+  (/193): BoundMul(name=/193, inputs=[/68, /183], perturbed=True)
+  (/194): BoundAdd(name=/194, inputs=[/192, /193], perturbed=True)
+  (/195): BoundMul(name=/195, inputs=[/69, /178/sqr], perturbed=True)
+  (/196): BoundAdd(name=/196, inputs=[/195, /186], perturbed=True)
+  (/197): BoundMul(name=/197, inputs=[/70, /184], perturbed=True)
+  (/198): BoundAdd(name=/198, inputs=[/196, /197], perturbed=True)
+  (/199): BoundMul(name=/199, inputs=[/71, /178/sqr], perturbed=True)
+  (/200): BoundSub(name=/200, inputs=[/199, /191], perturbed=True)
+  (/201): BoundMul(name=/201, inputs=[/72, /184], perturbed=True)
+  (/202): BoundAdd(name=/202, inputs=[/200, /201], perturbed=True)
+  (/203): BoundSplit(name=/203, inputs=[/shape.1], perturbed=False)
+  (/204): BoundSqueeze(name=/204, inputs=[/203], perturbed=False)
+  (/205): BoundUnsqueeze(name=/205, inputs=[/204], perturbed=False)
+  (/206): BoundConcat(name=/206, inputs=[/205], perturbed=False)
+  (/207): BoundConstant(name=/207, value=tensor([-1], device='cuda:0'))
+  (/208): BoundReshape(name=/208, inputs=[/206, /207], perturbed=False)
+  (/209): BoundShape(name=/209, inputs=[/208], perturbed=False)
+  (/210): BoundConstantOfShape(name=/210, inputs=[/209], perturbed=False)
+  (/211): BoundConstant(name=/211, value=-1)
+  (/212): BoundMul(name=/212, inputs=[/210, /211], perturbed=False)
+  (/213): BoundEqual(name=/213, inputs=[/208, /212], perturbed=False)
+  (/214): BoundWhere(name=/214, inputs=[/213, /210, /208], perturbed=False)
+  (/215): BoundExpand(name=/215, inputs=[/76, /214], perturbed=False)
+  (/216): BoundCast(name=/216, inputs=[/215], perturbed=False)
+  (/217): BoundMul(name=/217, inputs=[/216, /77], perturbed=False)
+  (/218): BoundEqual(name=/218, inputs=[/74, /217], perturbed=False)
+  (/219): BoundCast(name=/219, inputs=[/216], perturbed=False)
+  (/220): BoundCast(name=/220, inputs=[/74], perturbed=False)
+  (/shape): BoundWhere(name=/shape, inputs=[/218, /219, /220], perturbed=False)
+  (/222): BoundSplit(name=/222, inputs=[/shape], perturbed=False)
+  (/223): BoundSplit(name=/223, inputs=[/shape], perturbed=False)
+  (/224): BoundSqueeze(name=/224, inputs=[/222], perturbed=False)
+  (/225): BoundSqueeze(name=/225, inputs=[/223], perturbed=False)
+  (/226): BoundUnsqueeze(name=/226, inputs=[/224], perturbed=False)
+  (/227): BoundUnsqueeze(name=/227, inputs=[/225], perturbed=False)
+  (/228): BoundConcat(name=/228, inputs=[/226, /227], perturbed=False)
+  (/229): BoundConstantOfShape(name=/229, inputs=[/228], perturbed=False)
+  (/230): BoundMul(name=/230, inputs=[/73, /229], perturbed=False)
+  (/231): BoundSplit(name=/231, inputs=[/shape.5], perturbed=False)
+  (/232): BoundSqueeze(name=/232, inputs=[/231], perturbed=False)
+  (/233): BoundUnsqueeze(name=/233, inputs=[/232], perturbed=False)
+  (/234): BoundConcat(name=/234, inputs=[/233], perturbed=False)
+  (/235): BoundConstant(name=/235, value=tensor([-1], device='cuda:0'))
+  (/236): BoundReshape(name=/236, inputs=[/234, /235], perturbed=False)
+  (/237): BoundShape(name=/237, inputs=[/236], perturbed=False)
+  (/238): BoundConstantOfShape(name=/238, inputs=[/237], perturbed=False)
+  (/239): BoundConstant(name=/239, value=-1)
+  (/240): BoundMul(name=/240, inputs=[/238, /239], perturbed=False)
+  (/241): BoundEqual(name=/241, inputs=[/236, /240], perturbed=False)
+  (/242): BoundWhere(name=/242, inputs=[/241, /238, /236], perturbed=False)
+  (/243): BoundExpand(name=/243, inputs=[/80, /242], perturbed=False)
+  (/244): BoundCast(name=/244, inputs=[/243], perturbed=False)
+  (/245): BoundMul(name=/245, inputs=[/244, /81], perturbed=False)
+  (/246): BoundEqual(name=/246, inputs=[/78, /245], perturbed=False)
+  (/247): BoundCast(name=/247, inputs=[/244], perturbed=False)
+  (/248): BoundCast(name=/248, inputs=[/78], perturbed=False)
+  (/shape.4): BoundWhere(name=/shape.4, inputs=[/246, /247, /248], perturbed=False)
+  (/250): BoundSplit(name=/250, inputs=[/shape.4], perturbed=False)
+  (/251): BoundSplit(name=/251, inputs=[/shape.4], perturbed=False)
+  (/252): BoundSqueeze(name=/252, inputs=[/250], perturbed=False)
+  (/253): BoundSqueeze(name=/253, inputs=[/251], perturbed=False)
+  (/254): BoundUnsqueeze(name=/254, inputs=[/252], perturbed=False)
+  (/255): BoundUnsqueeze(name=/255, inputs=[/253], perturbed=False)
+  (/256): BoundConcat(name=/256, inputs=[/254, /255], perturbed=False)
+  (/257): BoundConstantOfShape(name=/257, inputs=[/256], perturbed=False)
+  (/258): BoundMul(name=/258, inputs=[/73, /257], perturbed=False)
+  (/261): BoundAdd(name=/261, inputs=[/259/sqr, /260/sqr], perturbed=True)
+  (/262): BoundSub(name=/262, inputs=[/261, /230], perturbed=True)
+  (/265): BoundAdd(name=/265, inputs=[/263/sqr, /264/sqr], perturbed=True)
+  (/266): BoundSub(name=/266, inputs=[/265, /258], perturbed=True)
+  (/267): BoundTranspose(name=/267, inputs=[/86], perturbed=False)
+  (/268): BoundMatMul(name=/268, inputs=[/132, /267], perturbed=True)
+  (/269): BoundTranspose(name=/269, inputs=[/87], perturbed=False)
+  (/270): BoundMatMul(name=/270, inputs=[/138, /269], perturbed=True)
+  (/271): BoundTranspose(name=/271, inputs=[/88], perturbed=False)
+  (/272): BoundMatMul(name=/272, inputs=[/146, /271], perturbed=True)
+  (/273): BoundTranspose(name=/273, inputs=[/89], perturbed=False)
+  (/274): BoundMatMul(name=/274, inputs=[/152, /273], perturbed=True)
+  (/275): BoundTranspose(name=/275, inputs=[/90], perturbed=False)
+  (/276): BoundMatMul(name=/276, inputs=[/189, /275], perturbed=True)
+  (/277): BoundTranspose(name=/277, inputs=[/91], perturbed=False)
+  (/278): BoundMatMul(name=/278, inputs=[/198, /277], perturbed=True)
+  (/279): BoundTranspose(name=/279, inputs=[/92], perturbed=False)
+  (/280): BoundMatMul(name=/280, inputs=[/194, /279], perturbed=True)
+  (/281): BoundTranspose(name=/281, inputs=[/93], perturbed=False)
+  (/282): BoundMatMul(name=/282, inputs=[/202, /281], perturbed=True)
+  (/284): BoundSub(name=/284, inputs=[/272, /268], perturbed=True)
+  (/285): BoundSub(name=/285, inputs=[/284, /278], perturbed=True)
+  (/286): BoundSub(name=/286, inputs=[/285, /276], perturbed=True)
+  (/287): BoundMul(name=/287, inputs=[/95, /283/sqr], perturbed=True)
+  (/288): BoundSub(name=/288, inputs=[/286, /287], perturbed=True)
+  (/289): BoundSub(name=/289, inputs=[/274, /270], perturbed=True)
+  (/290): BoundSub(name=/290, inputs=[/289, /282], perturbed=True)
+  (/291): BoundSub(name=/291, inputs=[/290, /280], perturbed=True)
+  (/292): BoundMul(name=/292, inputs=[/96, /283/sqr], perturbed=True)
+  (/293): BoundAdd(name=/293, inputs=[/291, /292], perturbed=True)
+  (/294): BoundConcat(name=/294, inputs=[/124, /189, /198, /194, /202, /262, /266, /288, /293], perturbed=True)
+  (/177/sqr): BoundSqr(name=/177/sqr, inputs=[/174], perturbed=True)
+  (/178/sqr): BoundSqr(name=/178/sqr, inputs=[/176], perturbed=True)
+  (/259/sqr): BoundSqr(name=/259/sqr, inputs=[/189], perturbed=True)
+  (/260/sqr): BoundSqr(name=/260/sqr, inputs=[/194], perturbed=True)
+  (/263/sqr): BoundSqr(name=/263/sqr, inputs=[/198], perturbed=True)
+  (/264/sqr): BoundSqr(name=/264/sqr, inputs=[/202], perturbed=True)
+  (/283/sqr): BoundSqr(name=/283/sqr, inputs=[/160], perturbed=True)
+)
+Original output: tensor([[ 0.00000000,  0.00000000,  0.00000000,  ...,  0.00069427,
+         -0.00016369,  0.00022861]], device='cuda:0')
+Split layers:
+  BoundLinear(name=/input, inputs=[/0, /19, /20], perturbed=True): [(BoundRelu(name=/98, inputs=[/input], perturbed=True), 0)]
+  BoundLinear(name=/input.3, inputs=[/98, /21, /22], perturbed=True): [(BoundRelu(name=/100, inputs=[/input.3], perturbed=True), 0)]
+  BoundLinear(name=/input.7, inputs=[/100, /23, /24], perturbed=True): [(BoundRelu(name=/102, inputs=[/input.7], perturbed=True), 0)]
+  BoundSlice(name=/113, inputs=[/103, /110, /111, /112], perturbed=True): [(BoundSigmoid(name=/114, inputs=[/113], perturbed=True), 0)]
+  BoundSub(name=/172, inputs=[/169, /171], perturbed=True): [(BoundCos(name=/179, inputs=[/172], perturbed=True), 0), (BoundSin(name=/180, inputs=[/172], perturbed=True), 0)]
+  BoundGather(name=/174, inputs=[/160, /173], perturbed=True): [(BoundMul(name=/181, inputs=[/174, /176], perturbed=True), 0), (BoundSqr(name=/177/sqr, inputs=[/174], perturbed=True), 0)]
+  BoundGather(name=/176, inputs=[/160, /175], perturbed=True): [(BoundMul(name=/181, inputs=[/174, /176], perturbed=True), 1), (BoundSqr(name=/178/sqr, inputs=[/176], perturbed=True), 0)]
+  BoundMul(name=/181, inputs=[/174, /176], perturbed=True): [(BoundMul(name=/182, inputs=[/181, /179], perturbed=True), 0), (BoundMul(name=/183, inputs=[/181, /180], perturbed=True), 0)]
+  BoundCos(name=/179, inputs=[/172], perturbed=True): [(BoundMul(name=/182, inputs=[/181, /179], perturbed=True), 1)]
+  BoundSin(name=/180, inputs=[/172], perturbed=True): [(BoundMul(name=/183, inputs=[/181, /180], perturbed=True), 1)]
+  BoundAdd(name=/189, inputs=[/187, /188], perturbed=True): [(BoundSqr(name=/259/sqr, inputs=[/189], perturbed=True), 0)]
+  BoundAdd(name=/194, inputs=[/192, /193], perturbed=True): [(BoundSqr(name=/260/sqr, inputs=[/194], perturbed=True), 0)]
+  BoundAdd(name=/198, inputs=[/196, /197], perturbed=True): [(BoundSqr(name=/263/sqr, inputs=[/198], perturbed=True), 0)]
+  BoundAdd(name=/202, inputs=[/200, /201], perturbed=True): [(BoundSqr(name=/264/sqr, inputs=[/202], perturbed=True), 0)]
+  BoundSlice(name=/160, inputs=[/124, /157, /158, /159], perturbed=True): [(BoundSqr(name=/283/sqr, inputs=[/160], perturbed=True), 0)]
+Nonlinear functions:
+   BoundRelu(name=/98, inputs=[/input], perturbed=True)
+   BoundRelu(name=/100, inputs=[/input.3], perturbed=True)
+   BoundRelu(name=/102, inputs=[/input.7], perturbed=True)
+   BoundSigmoid(name=/114, inputs=[/113], perturbed=True)
+   BoundCos(name=/179, inputs=[/172], perturbed=True)
+   BoundSin(name=/180, inputs=[/172], perturbed=True)
+   BoundMul(name=/181, inputs=[/174, /176], perturbed=True)
+   BoundMul(name=/182, inputs=[/181, /179], perturbed=True)
+   BoundMul(name=/183, inputs=[/181, /180], perturbed=True)
+   BoundSqr(name=/177/sqr, inputs=[/174], perturbed=True)
+   BoundSqr(name=/178/sqr, inputs=[/176], perturbed=True)
+   BoundSqr(name=/259/sqr, inputs=[/189], perturbed=True)
+   BoundSqr(name=/260/sqr, inputs=[/194], perturbed=True)
+   BoundSqr(name=/263/sqr, inputs=[/198], perturbed=True)
+   BoundSqr(name=/264/sqr, inputs=[/202], perturbed=True)
+   BoundSqr(name=/283/sqr, inputs=[/160], perturbed=True)
+layer /98 start_node /input.3 using full alpha [2, 128, 1, 128] with unstable size None total_size 128 output_shape torch.Size([128])
+layer /98 start_node /input.7 using full alpha [2, 256, 1, 128] with unstable size None total_size 256 output_shape torch.Size([256])
+layer /98 start_node /113 using full alpha [2, 226, 1, 128] with unstable size None total_size 226 output_shape torch.Size([226])
+layer /98 start_node /174 using full alpha [2, 186, 1, 128] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /98 start_node /176 using full alpha [2, 186, 1, 128] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /98 start_node /172 using full alpha [2, 186, 1, 128] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /98 start_node /181 using full alpha [2, 186, 1, 128] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /98 start_node /189 using full alpha [2, 186, 1, 128] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /98 start_node /194 using full alpha [2, 186, 1, 128] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /98 start_node /198 using full alpha [2, 186, 1, 128] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /98 start_node /202 using full alpha [2, 186, 1, 128] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /98 start_node /160 using full alpha [2, 118, 1, 128] with unstable size None total_size 118 output_shape torch.Size([118])
+layer /98 start_node /294 using full alpha [2, 236, 1, 128] with unstable size None total_size 236 output_shape 236
+layer /100 start_node /input.7 using full alpha [2, 256, 1, 128] with unstable size None total_size 256 output_shape torch.Size([256])
+layer /100 start_node /113 using full alpha [2, 226, 1, 128] with unstable size None total_size 226 output_shape torch.Size([226])
+layer /100 start_node /174 using full alpha [2, 186, 1, 128] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /100 start_node /176 using full alpha [2, 186, 1, 128] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /100 start_node /172 using full alpha [2, 186, 1, 128] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /100 start_node /181 using full alpha [2, 186, 1, 128] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /100 start_node /189 using full alpha [2, 186, 1, 128] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /100 start_node /194 using full alpha [2, 186, 1, 128] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /100 start_node /198 using full alpha [2, 186, 1, 128] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /100 start_node /202 using full alpha [2, 186, 1, 128] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /100 start_node /160 using full alpha [2, 118, 1, 128] with unstable size None total_size 118 output_shape torch.Size([118])
+layer /100 start_node /294 using full alpha [2, 236, 1, 128] with unstable size None total_size 236 output_shape 236
+layer /102 start_node /113 using full alpha [2, 226, 1, 256] with unstable size None total_size 226 output_shape torch.Size([226])
+layer /102 start_node /174 using full alpha [2, 186, 1, 256] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /102 start_node /176 using full alpha [2, 186, 1, 256] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /102 start_node /172 using full alpha [2, 186, 1, 256] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /102 start_node /181 using full alpha [2, 186, 1, 256] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /102 start_node /189 using full alpha [2, 186, 1, 256] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /102 start_node /194 using full alpha [2, 186, 1, 256] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /102 start_node /198 using full alpha [2, 186, 1, 256] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /102 start_node /202 using full alpha [2, 186, 1, 256] with unstable size None total_size 186 output_shape torch.Size([186])
+layer /102 start_node /160 using full alpha [2, 118, 1, 256] with unstable size None total_size 118 output_shape torch.Size([118])
+layer /102 start_node /294 using full alpha [2, 236, 1, 256] with unstable size None total_size 236 output_shape 236
+Optimizable variables initialized.
+initial CROWN bounds: tensor([[-1.03981400,  1.00686097, -1.04472959,  1.01652265, -1.04570365,
+          1.01740968, -1.06001079,  1.05986762, -1.06065977,  1.05488002,
+         -1.05871201,  1.04521859, -1.05692244,  1.03927338, -1.06015861,
+          1.03697371, -1.06001258,  1.05984211, -1.06598997,  1.02343452,
+         -1.05222690,  1.03108752, -1.05419564,  1.03087711, -1.04339671,
+          1.01872110, -1.05370557,  1.03215659, -1.05657816,  1.03649426,
+         -1.05195820,  1.03082061, -1.06001151,  1.05986845, -1.05910778,
+          1.04086769, -1.05571783,  1.03599739, -1.04819882,  1.01434791,
+         -1.04598832,  1.00310922, -1.05261946,  1.00065362, -1.12931538,
+          0.99023277, -1.14239264,  0.94970429, -1.06000984,  1.05987000,
+         -1.04735827,  1.01333642, -1.05113816,  1.03189957, -1.04361999,
+          1.01947856, -1.04270124,  1.01416218, -1.03884053,  1.02350986,
+         -1.04490554,  1.01552379, -1.05542588,  1.01764107, -1.05450642,
+          1.03704083, -1.06057119,  1.05183828, -1.05929434,  1.04961169,
+         -1.05964649,  1.05005240, -1.06001186,  1.05985737, -1.02852046,
+          1.00403988, -1.05846500,  1.00029671, -1.07630181,  0.98127735,
+         -1.06592429,  0.96195078, -1.07996762,  0.93328834, -1.08965385,
+          0.98600012, -1.07275367,  0.93389964, -1.06518424,  0.91401029,
+         -1.07944894,  0.92246705, -1.09758115,  0.93888062, -1.11854291,
+          0.93730640, -1.12506378,  0.93805891, -1.09853387,  0.94016671,
+         -1.06493402,  0.92917037, -1.05807161,  0.92217207, -1.05479598,
+          0.93047667, -1.07955635,  0.95546418, -1.07846880,  0.96052641,
+         -1.07813907,  0.95789593, -1.08092523,  0.94703794, -1.06597471,
+          0.93961591, -1.06014776,  1.05814648, -1.06487870,  1.02643752,
+         -1.40568948,  0.95195359, -1.06780016,  1.00951648, -1.05139589,
+          1.00921571, -1.09991622,  0.99741769, -1.12853456,  0.94880879,
+         -1.06075823,  1.03944266, -1.06156266,  1.03857207, -1.14252114,
+          0.95463097, -1.26407957,  0.94630218, -1.07259238,  0.95121831,
+         -1.07813251,  0.95378304, -1.09927464,  0.96470380, -1.08178198,
+          0.95173573, -1.04778123,  0.91990185, -1.04896271,  0.92855066,
+         -1.03981316,  0.89254183, -1.10567176,  0.97363043, -1.09112835,
+          0.97362506, -1.09610438,  0.97579622, -1.30384040,  0.96562767,
+         -1.08204770,  0.98330122, -1.07655227,  0.98489630, -1.08380365,
+          0.99082351, -1.06243885,  1.00675035, -1.06526911,  1.01964080,
+         -1.05994678,  1.01535583, -1.06792092,  1.00111401, -1.05868304,
+          1.03289819, -1.06000996,  1.05987012, -1.05336034,  1.02921522,
+         -1.05541301,  1.03584492, -1.05843711,  1.04100704, -1.05364132,
+          1.02054155, -1.05265355,  1.01124394, -1.04858923,  0.98998946,
+         -1.06413829,  0.98921132, -1.08635974,  0.99064177, -1.06846583,
+          1.00622559, -1.06325233,  1.03823638, -1.06001532,  1.05980134,
+         -1.05332410,  1.03731322, -1.05687499,  1.03867733, -1.05409873,
+          1.02872765, -1.04931366,  1.02602291, -1.04801726,  1.02319384,
+         -1.04181349,  1.01780224, -1.04113960,  1.01814938, -1.03769088,
+          1.01586509, -1.03519464,  1.01253128, -1.03137970,  1.00762498,
+         -1.03253973,  1.01088119, -1.01784778,  0.99329942, -1.06158245,
+          1.04330492, -1.04982257,  1.01923192, -1.04887521,  1.01991212,
+         -1.31169701,  0.93393904, -1.04067719,  1.01480949, -1.04047704,
+          0.89660507]], device='cuda:0') None
+****** iter [0] loss: 8.649593353271484, lr: 0.5 pruning_in_iteration open status: None
+****** iter [1] loss: 7.718472480773926, lr: 0.495 pruning_in_iteration open status: None
+****** iter [2] loss: 5.739635944366455, lr: 0.49005 pruning_in_iteration open status: None
+****** iter [3] loss: 5.157186985015869, lr: 0.48514949999999996 pruning_in_iteration open status: None
+****** iter [4] loss: 4.9228739738464355, lr: 0.480298005 pruning_in_iteration open status: None
+****** iter [5] loss: 4.848377704620361, lr: 0.47549502494999996 pruning_in_iteration open status: None
+****** iter [6] loss: 4.800793647766113, lr: 0.47074007470049994 pruning_in_iteration open status: None
+****** iter [7] loss: 4.747562408447266, lr: 0.46603267395349496 pruning_in_iteration open status: None
+****** iter [8] loss: 4.719376564025879, lr: 0.46137234721396 pruning_in_iteration open status: None
+****** iter [9] loss: 4.673855304718018, lr: 0.45675862374182036 pruning_in_iteration open status: None
+****** iter [10] loss: 4.651413917541504, lr: 0.45219103750440215 pruning_in_iteration open status: None
+****** iter [11] loss: 4.6402716636657715, lr: 0.44766912712935814 pruning_in_iteration open status: None
+****** iter [12] loss: 4.621565341949463, lr: 0.44319243585806456 pruning_in_iteration open status: None
+****** iter [13] loss: 4.594867706298828, lr: 0.4387605114994839 pruning_in_iteration open status: None
+****** iter [14] loss: 4.581551551818848, lr: 0.43437290638448905 pruning_in_iteration open status: None
+****** iter [15] loss: 4.570366859436035, lr: 0.43002917732064416 pruning_in_iteration open status: None
+****** iter [16] loss: 4.550697326660156, lr: 0.4257288855474377 pruning_in_iteration open status: None
+****** iter [17] loss: 4.539186000823975, lr: 0.4214715966919633 pruning_in_iteration open status: None
+****** iter [18] loss: 4.529024124145508, lr: 0.4172568807250437 pruning_in_iteration open status: None
+****** iter [19] loss: 4.525787353515625, lr: 0.41308431191779327 pruning_in_iteration open status: None
+****** iter [20] loss: 4.510682106018066, lr: 0.4089534687986153 pruning_in_iteration open status: None
+****** iter [21] loss: 4.504918098449707, lr: 0.40486393411062915 pruning_in_iteration open status: None
+****** iter [22] loss: 4.498190879821777, lr: 0.4008152947695229 pruning_in_iteration open status: None
+****** iter [23] loss: 4.487211227416992, lr: 0.39680714182182764 pruning_in_iteration open status: None
+****** iter [24] loss: 4.4778242111206055, lr: 0.3928390704036094 pruning_in_iteration open status: None
+****** iter [25] loss: 4.476841449737549, lr: 0.38891067969957327 pruning_in_iteration open status: None
+****** iter [26] loss: 4.468411445617676, lr: 0.38502157290257755 pruning_in_iteration open status: None
+****** iter [27] loss: 4.462224960327148, lr: 0.3811713571735518 pruning_in_iteration open status: None
+****** iter [28] loss: 4.461213111877441, lr: 0.37735964360181623 pruning_in_iteration open status: None
+****** iter [29] loss: 4.456817626953125, lr: 0.3735860471657981 pruning_in_iteration open status: None
+****** iter [30] loss: 4.452927112579346, lr: 0.3698501866941401 pruning_in_iteration open status: None
+****** iter [31] loss: 4.460992813110352, lr: 0.3661516848271987 pruning_in_iteration open status: None
+****** iter [32] loss: 4.45393180847168, lr: 0.3624901679789267 pruning_in_iteration open status: None
+****** iter [33] loss: 4.446992874145508, lr: 0.3588652662991374 pruning_in_iteration open status: None
+****** iter [34] loss: 4.442122459411621, lr: 0.35527661363614604 pruning_in_iteration open status: None
+****** iter [35] loss: 4.4395551681518555, lr: 0.3517238474997846 pruning_in_iteration open status: None
+****** iter [36] loss: 4.436113357543945, lr: 0.34820660902478673 pruning_in_iteration open status: None
+****** iter [37] loss: 4.4356689453125, lr: 0.34472454293453886 pruning_in_iteration open status: None
+****** iter [38] loss: 4.434185981750488, lr: 0.3412772975051935 pruning_in_iteration open status: None
+****** iter [39] loss: 4.432025909423828, lr: 0.33786452453014154 pruning_in_iteration open status: None
+best_l after optimization: -4.427976131439209
+alpha/beta optimization time: 23.22664761543274
+
+initial alpha-crown bounds: tensor([[-1.03548145,  1.01177669, -1.04041123,  1.02094400, -1.04134798,
+          1.02171886, -1.05999959,  1.05991542, -1.05957639,  1.05605340,
+         -1.05624568,  1.04737127, -1.05359375,  1.04190862, -1.05445683,
+          1.03933096, -1.05999959,  1.05990255, -1.05928767,  1.04562593,
+         -1.04843450,  1.03443527, -1.04996061,  1.03468919, -1.03954375,
+          1.02224433, -1.04986906,  1.03590882, -1.05275404,  1.04086077,
+         -1.04818285,  1.03437400, -1.05999947,  1.05991507, -1.05599391,
+          1.04458392, -1.05222631,  1.04021263, -1.04248643,  1.02256775,
+         -1.03876746,  1.01382554, -1.04342711,  1.01479745, -1.05790460,
+          1.02416992, -1.05948007,  0.99032348, -1.05999970,  1.05992174,
+         -1.03926396,  1.01943457, -1.04780543,  1.03575778, -1.03992188,
+          1.02533746, -1.03859341,  1.02137637, -1.03608322,  1.02552760,
+         -1.04053724,  1.02319324, -1.04896951,  1.03128123, -1.05124485,
+          1.04003906, -1.05890334,  1.05313849, -1.05758083,  1.05083728,
+         -1.05789149,  1.05110645, -1.05999947,  1.05990767, -1.02553844,
+          1.00691795, -1.04647028,  1.00977075, -1.04704094,  0.99328011,
+         -1.04373527,  0.97676665, -1.05167675,  0.95761275, -1.05112457,
+          1.00259912, -1.04908061,  0.95968324, -1.04777074,  0.95122600,
+         -1.05302310,  0.95296037, -1.05706072,  0.95734662, -1.05892038,
+          0.95291674, -1.05928791,  0.95219123, -1.05721235,  0.95769966,
+         -1.04592896,  0.95719850, -1.04227912,  0.95505351, -1.03966844,
+          0.95987689, -1.04957104,  0.97409785, -1.04851866,  0.97849739,
+         -1.04874301,  0.97591341, -1.05083632,  0.96644711, -1.04561090,
+          0.96324635, -1.05999506,  1.05917406, -1.05961680,  1.03885853,
+         -1.06000066,  1.05305851, -1.05969024,  1.02669275, -1.04485106,
+          1.01550269, -1.05466056,  1.01056623, -1.05924630,  0.96703374,
+         -1.05999577,  1.05676353, -1.05660689,  1.04269195, -1.05928850,
+          0.97050506, -1.06014585,  0.97061419, -1.05056655,  0.97247821,
+         -1.05275190,  0.97855514, -1.05431986,  0.98565114, -1.05363333,
+          0.96796882, -1.03971255,  0.95602942, -1.04071069,  0.95977902,
+         -1.03259873,  0.94871050, -1.05569160,  0.99498123, -1.05324101,
+          0.99353206, -1.05473542,  0.99669248, -1.05999565,  1.00551271,
+         -1.04952085,  0.98376453, -1.04915595,  1.00000191, -1.05057430,
+          1.00529504, -1.05203187,  1.01660967, -1.05673838,  1.02875721,
+         -1.05168724,  1.02356005, -1.05996025,  1.02109647, -1.05394101,
+          1.03691435, -1.05999970,  1.05992317, -1.04969180,  1.03137028,
+         -1.05207789,  1.03738701, -1.05519974,  1.04321826, -1.04773450,
+          1.02571642, -1.04538178,  1.01860952, -1.03663981,  0.99980360,
+         -1.04438090,  1.00269318, -1.05143487,  1.00871801, -1.05615330,
+          1.02473187, -1.05966890,  1.04820716, -1.05999947,  1.05988824,
+         -1.05036283,  1.03853989, -1.05349636,  1.04041958, -1.04950762,
+          1.03175855, -1.04552794,  1.02727365, -1.04400408,  1.02450168,
+         -1.03821695,  1.01889944, -1.03741145,  1.01925170, -1.03463733,
+          1.01723266, -1.03205252,  1.01404846, -1.02815890,  1.00956488,
+         -1.02887523,  1.01347399, -1.01429439,  0.99540174, -1.05987430,
+          1.05236530, -1.04472983,  1.02848589, -1.04414725,  1.02845156,
+         -1.06045425,  0.95624280, -1.03685129,  1.01844323, -1.03314054,
+          0.94952685]], device='cuda:0')
+Worst class: (+ rhs) -1.060454249382019
+Missing A for BoundCos(name=/179, inputs=[/172], perturbed=True). Making an additional CROWN call.
+Missing A for BoundSin(name=/180, inputs=[/172], perturbed=True). Making an additional CROWN call.
+Total VNNLIB file length: 236, max property batch size: 1, total number of batches: 236
+lA shape: [torch.Size([236, 1, 128]), torch.Size([236, 1, 128]), torch.Size([236, 1, 256]), torch.Size([236, 1, 226]), torch.Size([236, 1, 186]), torch.Size([236, 1, 186]), torch.Size([236, 1, 186]), torch.Size([236, 1, 186]), torch.Size([236, 1, 186]), torch.Size([236, 1, 186]), torch.Size([236, 1, 186]), torch.Size([236, 1, 186]), torch.Size([236, 1, 186]), torch.Size([236, 1, 186]), torch.Size([236, 1, 186]), torch.Size([236, 1, 118])]
+
+Properties batch 0, size 1
+Remaining timeout: 570.0044181346893
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0354814529418945.
+
+Properties batch 1, size 1
+Remaining timeout: 569.8284454345703
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0117766857147217.
+
+Properties batch 2, size 1
+Remaining timeout: 569.7305362224579
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0404112339019775.
+
+Properties batch 3, size 1
+Remaining timeout: 569.6318972110748
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0209439992904663.
+
+Properties batch 4, size 1
+Remaining timeout: 569.5347168445587
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0413479804992676.
+
+Properties batch 5, size 1
+Remaining timeout: 569.4381926059723
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0217188596725464.
+
+Properties batch 6, size 1
+Remaining timeout: 569.3418819904327
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0599995851516724.
+
+Properties batch 7, size 1
+Remaining timeout: 569.2455775737762
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0599154233932495.
+
+Properties batch 8, size 1
+Remaining timeout: 569.1490731239319
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.059576392173767.
+
+Properties batch 9, size 1
+Remaining timeout: 569.0530228614807
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0560534000396729.
+
+Properties batch 10, size 1
+Remaining timeout: 568.9549126625061
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0562456846237183.
+
+Properties batch 11, size 1
+Remaining timeout: 568.8393559455872
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0473712682724.
+
+Properties batch 12, size 1
+Remaining timeout: 568.7431025505066
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0535937547683716.
+
+Properties batch 13, size 1
+Remaining timeout: 568.647260427475
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.041908621788025.
+
+Properties batch 14, size 1
+Remaining timeout: 568.5501456260681
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0544568300247192.
+
+Properties batch 15, size 1
+Remaining timeout: 568.4534583091736
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0393309593200684.
+
+Properties batch 16, size 1
+Remaining timeout: 568.3573038578033
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0599995851516724.
+
+Properties batch 17, size 1
+Remaining timeout: 568.2604594230652
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.059902548789978.
+
+Properties batch 18, size 1
+Remaining timeout: 568.1641023159027
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.059287667274475.
+
+Properties batch 19, size 1
+Remaining timeout: 568.0680298805237
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.045625925064087.
+
+Properties batch 20, size 1
+Remaining timeout: 567.9713854789734
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0484344959259033.
+
+Properties batch 21, size 1
+Remaining timeout: 567.8750159740448
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0344352722167969.
+
+Properties batch 22, size 1
+Remaining timeout: 567.7778532505035
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0499606132507324.
+
+Properties batch 23, size 1
+Remaining timeout: 567.681245803833
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.03468918800354.
+
+Properties batch 24, size 1
+Remaining timeout: 567.5848987102509
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0395437479019165.
+
+Properties batch 25, size 1
+Remaining timeout: 567.4885733127594
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0222443342208862.
+
+Properties batch 26, size 1
+Remaining timeout: 567.3918323516846
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0498690605163574.
+
+Properties batch 27, size 1
+Remaining timeout: 567.2781524658203
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.035908818244934.
+
+Properties batch 28, size 1
+Remaining timeout: 567.1830127239227
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0527540445327759.
+
+Properties batch 29, size 1
+Remaining timeout: 567.087381362915
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0408607721328735.
+
+Properties batch 30, size 1
+Remaining timeout: 566.9917840957642
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0481828451156616.
+
+Properties batch 31, size 1
+Remaining timeout: 566.8944253921509
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0343739986419678.
+
+Properties batch 32, size 1
+Remaining timeout: 566.7983024120331
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0599994659423828.
+
+Properties batch 33, size 1
+Remaining timeout: 566.7026200294495
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0599150657653809.
+
+Properties batch 34, size 1
+Remaining timeout: 566.6066808700562
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.055993914604187.
+
+Properties batch 35, size 1
+Remaining timeout: 566.509428024292
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0445839166641235.
+
+Properties batch 36, size 1
+Remaining timeout: 566.4133453369141
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0522263050079346.
+
+Properties batch 37, size 1
+Remaining timeout: 566.3157043457031
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.040212631225586.
+
+Properties batch 38, size 1
+Remaining timeout: 566.2202241420746
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0424864292144775.
+
+Properties batch 39, size 1
+Remaining timeout: 566.1245503425598
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0225677490234375.
+
+Properties batch 40, size 1
+Remaining timeout: 566.0287454128265
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0387674570083618.
+
+Properties batch 41, size 1
+Remaining timeout: 565.9329283237457
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.013825535774231.
+
+Properties batch 42, size 1
+Remaining timeout: 565.8369522094727
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0434271097183228.
+
+Properties batch 43, size 1
+Remaining timeout: 565.7410535812378
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0147974491119385.
+
+Properties batch 44, size 1
+Remaining timeout: 565.6453094482422
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.057904601097107.
+
+Properties batch 45, size 1
+Remaining timeout: 565.5492351055145
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.024169921875.
+
+Properties batch 46, size 1
+Remaining timeout: 565.4533383846283
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.05948007106781.
+
+Properties batch 47, size 1
+Remaining timeout: 565.3471488952637
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9903234839439392.
+
+Properties batch 48, size 1
+Remaining timeout: 565.2410666942596
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.059999704360962.
+
+Properties batch 49, size 1
+Remaining timeout: 565.1402497291565
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0599217414855957.
+
+Properties batch 50, size 1
+Remaining timeout: 565.0360355377197
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0392639636993408.
+
+Properties batch 51, size 1
+Remaining timeout: 564.9318156242371
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0194345712661743.
+
+Properties batch 52, size 1
+Remaining timeout: 564.8341879844666
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0478054285049438.
+
+Properties batch 53, size 1
+Remaining timeout: 564.7363066673279
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0357577800750732.
+
+Properties batch 54, size 1
+Remaining timeout: 564.638420343399
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0399218797683716.
+
+Properties batch 55, size 1
+Remaining timeout: 564.5425233840942
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0253374576568604.
+
+Properties batch 56, size 1
+Remaining timeout: 564.445324420929
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0385934114456177.
+
+Properties batch 57, size 1
+Remaining timeout: 564.3482294082642
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.021376371383667.
+
+Properties batch 58, size 1
+Remaining timeout: 564.2480165958405
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0360832214355469.
+
+Properties batch 59, size 1
+Remaining timeout: 564.1311948299408
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0255275964736938.
+
+Properties batch 60, size 1
+Remaining timeout: 564.0344355106354
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0405372381210327.
+
+Properties batch 61, size 1
+Remaining timeout: 563.9382750988007
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0231932401657104.
+
+Properties batch 62, size 1
+Remaining timeout: 563.842202425003
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0489695072174072.
+
+Properties batch 63, size 1
+Remaining timeout: 563.7466130256653
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0312812328338623.
+
+Properties batch 64, size 1
+Remaining timeout: 563.651040315628
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.051244854927063.
+
+Properties batch 65, size 1
+Remaining timeout: 563.5546011924744
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0400390625.
+
+Properties batch 66, size 1
+Remaining timeout: 563.4540550708771
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0589033365249634.
+
+Properties batch 67, size 1
+Remaining timeout: 563.3464584350586
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0531384944915771.
+
+Properties batch 68, size 1
+Remaining timeout: 563.2273080348969
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.057580828666687.
+
+Properties batch 69, size 1
+Remaining timeout: 563.1137557029724
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0508372783660889.
+
+Properties batch 70, size 1
+Remaining timeout: 562.9982888698578
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0578914880752563.
+
+Properties batch 71, size 1
+Remaining timeout: 562.8848533630371
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0511064529418945.
+
+Properties batch 72, size 1
+Remaining timeout: 562.7717418670654
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0599994659423828.
+
+Properties batch 73, size 1
+Remaining timeout: 562.664717912674
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0599076747894287.
+
+Properties batch 74, size 1
+Remaining timeout: 562.5540132522583
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.025538444519043.
+
+Properties batch 75, size 1
+Remaining timeout: 562.4574925899506
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.006917953491211.
+
+Properties batch 76, size 1
+Remaining timeout: 562.3611030578613
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.046470284461975.
+
+Properties batch 77, size 1
+Remaining timeout: 562.2648329734802
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0097707509994507.
+
+Properties batch 78, size 1
+Remaining timeout: 562.1684448719025
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0470409393310547.
+
+Properties batch 79, size 1
+Remaining timeout: 562.0722889900208
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9932801127433777.
+
+Properties batch 80, size 1
+Remaining timeout: 561.9759492874146
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0437352657318115.
+
+Properties batch 81, size 1
+Remaining timeout: 561.8798112869263
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9767666459083557.
+
+Properties batch 82, size 1
+Remaining timeout: 561.7833828926086
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0516767501831055.
+
+Properties batch 83, size 1
+Remaining timeout: 561.6865179538727
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9576127529144287.
+
+Properties batch 84, size 1
+Remaining timeout: 561.5901715755463
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0511245727539062.
+
+Properties batch 85, size 1
+Remaining timeout: 561.4938583374023
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0025991201400757.
+
+Properties batch 86, size 1
+Remaining timeout: 561.3972659111023
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0490806102752686.
+
+Properties batch 87, size 1
+Remaining timeout: 561.3006827831268
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9596832394599915.
+
+Properties batch 88, size 1
+Remaining timeout: 561.199324131012
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0477707386016846.
+
+Properties batch 89, size 1
+Remaining timeout: 561.096608877182
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.951225996017456.
+
+Properties batch 90, size 1
+Remaining timeout: 560.9188456535339
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.053023099899292.
+
+Properties batch 91, size 1
+Remaining timeout: 560.8229644298553
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9529603719711304.
+
+Properties batch 92, size 1
+Remaining timeout: 560.7269244194031
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.057060718536377.
+
+Properties batch 93, size 1
+Remaining timeout: 560.6308052539825
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9573466181755066.
+
+Properties batch 94, size 1
+Remaining timeout: 560.526252746582
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0589203834533691.
+
+Properties batch 95, size 1
+Remaining timeout: 560.4258415699005
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9529167413711548.
+
+Properties batch 96, size 1
+Remaining timeout: 560.3291828632355
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0592879056930542.
+
+Properties batch 97, size 1
+Remaining timeout: 560.2327835559845
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9521912336349487.
+
+Properties batch 98, size 1
+Remaining timeout: 560.1216187477112
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0572123527526855.
+
+Properties batch 99, size 1
+Remaining timeout: 560.0250942707062
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9576996564865112.
+
+Properties batch 100, size 1
+Remaining timeout: 559.9209232330322
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.045928955078125.
+
+Properties batch 101, size 1
+Remaining timeout: 559.8250825405121
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9571985006332397.
+
+Properties batch 102, size 1
+Remaining timeout: 559.729391336441
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0422791242599487.
+
+Properties batch 103, size 1
+Remaining timeout: 559.6336476802826
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9550535082817078.
+
+Properties batch 104, size 1
+Remaining timeout: 559.5292410850525
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0396684408187866.
+
+Properties batch 105, size 1
+Remaining timeout: 559.4154012203217
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9598768949508667.
+
+Properties batch 106, size 1
+Remaining timeout: 559.3201723098755
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0495710372924805.
+
+Properties batch 107, size 1
+Remaining timeout: 559.2249579429626
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9740978479385376.
+
+Properties batch 108, size 1
+Remaining timeout: 559.1260871887207
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0485186576843262.
+
+Properties batch 109, size 1
+Remaining timeout: 559.0244035720825
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9784973859786987.
+
+Properties batch 110, size 1
+Remaining timeout: 558.9288017749786
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0487430095672607.
+
+Properties batch 111, size 1
+Remaining timeout: 558.8336157798767
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.975913405418396.
+
+Properties batch 112, size 1
+Remaining timeout: 558.7382681369781
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0508363246917725.
+
+Properties batch 113, size 1
+Remaining timeout: 558.642605304718
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.966447114944458.
+
+Properties batch 114, size 1
+Remaining timeout: 558.540096282959
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0456109046936035.
+
+Properties batch 115, size 1
+Remaining timeout: 558.4385206699371
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9632463455200195.
+
+Properties batch 116, size 1
+Remaining timeout: 558.3346786499023
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0599950551986694.
+
+Properties batch 117, size 1
+Remaining timeout: 558.2301867008209
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0591740608215332.
+
+Properties batch 118, size 1
+Remaining timeout: 558.1247138977051
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0596168041229248.
+
+Properties batch 119, size 1
+Remaining timeout: 558.0186648368835
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0388585329055786.
+
+Properties batch 120, size 1
+Remaining timeout: 557.9171795845032
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0600006580352783.
+
+Properties batch 121, size 1
+Remaining timeout: 557.8098821640015
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0530585050582886.
+
+Properties batch 122, size 1
+Remaining timeout: 557.7049400806427
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.059690237045288.
+
+Properties batch 123, size 1
+Remaining timeout: 557.602865934372
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0266927480697632.
+
+Properties batch 124, size 1
+Remaining timeout: 557.4942109584808
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0448510646820068.
+
+Properties batch 125, size 1
+Remaining timeout: 557.3855991363525
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.015502691268921.
+
+Properties batch 126, size 1
+Remaining timeout: 557.2748522758484
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0546605587005615.
+
+Properties batch 127, size 1
+Remaining timeout: 557.1704292297363
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.010566234588623.
+
+Properties batch 128, size 1
+Remaining timeout: 557.0653808116913
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.059246301651001.
+
+Properties batch 129, size 1
+Remaining timeout: 556.9579634666443
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9670337438583374.
+
+Properties batch 130, size 1
+Remaining timeout: 556.8506696224213
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0599957704544067.
+
+Properties batch 131, size 1
+Remaining timeout: 556.7500886917114
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0567635297775269.
+
+Properties batch 132, size 1
+Remaining timeout: 556.6446266174316
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0566068887710571.
+
+Properties batch 133, size 1
+Remaining timeout: 556.544646024704
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.042691946029663.
+
+Properties batch 134, size 1
+Remaining timeout: 556.4479582309723
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.059288501739502.
+
+Properties batch 135, size 1
+Remaining timeout: 556.335643529892
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9705050587654114.
+
+Properties batch 136, size 1
+Remaining timeout: 556.2331507205963
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Remaining spec index tensor([0], device='cuda:0') with bounds tensor([[-1.06014585]], device='cuda:0') need to verify.
+torch allclose failed: norm 9.194908489007503e-05
+Model prediction is: tensor([ 0.00000000,  0.00000000,  0.00000000,  ...,  0.00069427,
+        -0.00016369,  0.00022861], device='cuda:0')
+build_with_refined_bounds batch [1/1]
+setting alpha for layer /98 start_node /294 with alignment adjustment
+setting alpha for layer /100 start_node /294 with alignment adjustment
+setting alpha for layer /102 start_node /294 with alignment adjustment
+setting alpha for layer /114 start_node /294 with alignment adjustment
+setting alpha for layer /177/sqr start_node /294 with alignment adjustment
+setting alpha for layer /178/sqr start_node /294 with alignment adjustment
+setting alpha for layer /259/sqr start_node /294 with alignment adjustment
+setting alpha for layer /260/sqr start_node /294 with alignment adjustment
+setting alpha for layer /263/sqr start_node /294 with alignment adjustment
+setting alpha for layer /264/sqr start_node /294 with alignment adjustment
+setting alpha for layer /283/sqr start_node /294 with alignment adjustment
+setting alpha for layer /181 start_node /294 with alignment adjustment
+setting alpha for layer /182 start_node /294 with alignment adjustment
+setting alpha for layer /183 start_node /294 with alignment adjustment
+all alpha initialized
+true A is required, we do a full backward CROWN pass to obtain it
+(alpha-)CROWN with fixed intermediate bounds: tensor([[-1.06012332]], device='cuda:0') tensor([[-0.96435559]], device='cuda:0')
+Intermediate layers: /input,/input.3,/input.7,/113,/172,/174,/176,/181,/179,/180,/189,/194,/198,/202,/160,/294
+Keeping alphas for these layers: ['/294']
+Keeping alphas for these layers: ['/294']
+Node /98 input 0: size torch.Size([128]) unstable 31
+Node /100 input 0: size torch.Size([128]) unstable 33
+Node /102 input 0: size torch.Size([256]) unstable 72
+Node /114 input 0: size torch.Size([226]) unstable 226
+Node /179 input 0: size torch.Size([186]) unstable 183
+Node /180 input 0: size torch.Size([186]) unstable 183
+Node /181 input 0: size torch.Size([186]) unstable 186
+Node /181 input 1: size torch.Size([186]) unstable 186
+Node /182 input 0: size torch.Size([186]) unstable 186
+Node /182 input 1: size torch.Size([186]) unstable 186
+Node /183 input 0: size torch.Size([186]) unstable 186
+Node /183 input 1: size torch.Size([186]) unstable 186
+Node /177/sqr input 0: size torch.Size([186]) unstable 186
+Node /178/sqr input 0: size torch.Size([186]) unstable 186
+Node /259/sqr input 0: size torch.Size([186]) unstable 186
+Node /260/sqr input 0: size torch.Size([186]) unstable 186
+Node /263/sqr input 0: size torch.Size([186]) unstable 186
+Node /264/sqr input 0: size torch.Size([186]) unstable 186
+Node /283/sqr input 0: size torch.Size([118]) unstable 118
+-----------------
+# of unstable neurons: 3078
+-----------------
+
+BaB round 1
+batch: 1
+Start filtering...
+  0%|                                                                                                                 | 0/1 [00:00<?, ?it/s]100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 21.05it/s]
+kfsb choice: tensor([0], device='cuda:0')
+Filtering time: 0.05063748359680176
+Previous best: tensor(-0.00012231, device='cuda:0')
+Previous worst: tensor(-0.00012231, device='cuda:0')
+New worst: tensor(-8.82148743e-05, device='cuda:0')
+Average branched neurons at iteration 1:  1.0000
+splitting decisions: 
+split level 0: [/input.7, 210] 
+****** iter [0] loss: 2.120119094848633, lr: 0.5 pruning_in_iteration open status: None
+****** iter [1] loss: 1.0600074529647827, lr: 0.49 pruning_in_iteration open status: None
+****** iter [2] loss: 1.0600532293319702, lr: 0.48019999999999996 pruning_in_iteration open status: None
+****** iter [3] loss: 0.0, lr: 0.47059599999999996 pruning_in_iteration open status: None
+
+all verified at 3th iter
+
+Time: prepare 0.0010    bound 0.6246    transfer 0.0005    finalize 0.0012    func 0.6273    
+Accumulated time: func 0.6273    prepare 0.0012    bound 0.6246    transfer 0.0005    finalize 0.0012    
+length of domains: 0
+Time: pickout 0.0023    decision 0.1653    set_bounds 0.0016    solve 0.6274    add 0.0002    
+Accumulated time: pickout 0.0023    decision 0.1653    set_bounds 0.0016    solve 0.6274    add 0.0002    
+No domains left, verification finished!
+Current (lb-rhs): 1.0000000116860974e-07
+0 domains visited
+Cumulative time: 1.2444818019866943
+
+
+Properties batch 137, size 1
+Remaining timeout: 554.4393060207367
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9706141948699951.
+
+Properties batch 138, size 1
+Remaining timeout: 554.3394641876221
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.050566554069519.
+
+Properties batch 139, size 1
+Remaining timeout: 554.2350378036499
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9724782109260559.
+
+Properties batch 140, size 1
+Remaining timeout: 554.128918170929
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.052751898765564.
+
+Properties batch 141, size 1
+Remaining timeout: 554.0282986164093
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9785551428794861.
+
+Properties batch 142, size 1
+Remaining timeout: 553.9288158416748
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0543198585510254.
+
+Properties batch 143, size 1
+Remaining timeout: 553.8197011947632
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9856511354446411.
+
+Properties batch 144, size 1
+Remaining timeout: 553.7199366092682
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0536333322525024.
+
+Properties batch 145, size 1
+Remaining timeout: 553.6137635707855
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9679688215255737.
+
+Properties batch 146, size 1
+Remaining timeout: 553.5155708789825
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0397125482559204.
+
+Properties batch 147, size 1
+Remaining timeout: 553.4195837974548
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9560294151306152.
+
+Properties batch 148, size 1
+Remaining timeout: 553.3234477043152
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.040710687637329.
+
+Properties batch 149, size 1
+Remaining timeout: 553.2146518230438
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9597790241241455.
+
+Properties batch 150, size 1
+Remaining timeout: 553.1092748641968
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0325987339019775.
+
+Properties batch 151, size 1
+Remaining timeout: 553.0084989070892
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9487105011940002.
+
+Properties batch 152, size 1
+Remaining timeout: 552.9126989841461
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0556915998458862.
+
+Properties batch 153, size 1
+Remaining timeout: 552.8074994087219
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9949812293052673.
+
+Properties batch 154, size 1
+Remaining timeout: 552.7018785476685
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0532410144805908.
+
+Properties batch 155, size 1
+Remaining timeout: 552.5982015132904
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9935320615768433.
+
+Properties batch 156, size 1
+Remaining timeout: 552.502605676651
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0547354221343994.
+
+Properties batch 157, size 1
+Remaining timeout: 552.4049274921417
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9966924786567688.
+
+Properties batch 158, size 1
+Remaining timeout: 552.3062946796417
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0599956512451172.
+
+Properties batch 159, size 1
+Remaining timeout: 552.2021808624268
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0055127143859863.
+
+Properties batch 160, size 1
+Remaining timeout: 552.1024374961853
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0495208501815796.
+
+Properties batch 161, size 1
+Remaining timeout: 552.0057017803192
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9837645292282104.
+
+Properties batch 162, size 1
+Remaining timeout: 551.8993539810181
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0491559505462646.
+
+Properties batch 163, size 1
+Remaining timeout: 551.7992537021637
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0000019073486328.
+
+Properties batch 164, size 1
+Remaining timeout: 551.6891026496887
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0505743026733398.
+
+Properties batch 165, size 1
+Remaining timeout: 551.5900113582611
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0052950382232666.
+
+Properties batch 166, size 1
+Remaining timeout: 551.4838480949402
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0520318746566772.
+
+Properties batch 167, size 1
+Remaining timeout: 551.3746178150177
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0166096687316895.
+
+Properties batch 168, size 1
+Remaining timeout: 551.2675106525421
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0567383766174316.
+
+Properties batch 169, size 1
+Remaining timeout: 551.1601102352142
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0287572145462036.
+
+Properties batch 170, size 1
+Remaining timeout: 551.0474286079407
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.051687240600586.
+
+Properties batch 171, size 1
+Remaining timeout: 550.9337472915649
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0235600471496582.
+
+Properties batch 172, size 1
+Remaining timeout: 550.8255958557129
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0599602460861206.
+
+Properties batch 173, size 1
+Remaining timeout: 550.7246224880219
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0210964679718018.
+
+Properties batch 174, size 1
+Remaining timeout: 550.6185448169708
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.053941011428833.
+
+Properties batch 175, size 1
+Remaining timeout: 550.5131802558899
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.036914348602295.
+
+Properties batch 176, size 1
+Remaining timeout: 550.4046256542206
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.059999704360962.
+
+Properties batch 177, size 1
+Remaining timeout: 550.2973415851593
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0599231719970703.
+
+Properties batch 178, size 1
+Remaining timeout: 550.1920838356018
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0496917963027954.
+
+Properties batch 179, size 1
+Remaining timeout: 550.0798017978668
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0313702821731567.
+
+Properties batch 180, size 1
+Remaining timeout: 549.9788129329681
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0520778894424438.
+
+Properties batch 181, size 1
+Remaining timeout: 549.8823373317719
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0373870134353638.
+
+Properties batch 182, size 1
+Remaining timeout: 549.7857687473297
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0551997423171997.
+
+Properties batch 183, size 1
+Remaining timeout: 549.6887588500977
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0432182550430298.
+
+Properties batch 184, size 1
+Remaining timeout: 549.5915231704712
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0477344989776611.
+
+Properties batch 185, size 1
+Remaining timeout: 549.4953632354736
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0257164239883423.
+
+Properties batch 186, size 1
+Remaining timeout: 549.3935353755951
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.045381784439087.
+
+Properties batch 187, size 1
+Remaining timeout: 549.2897934913635
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0186095237731934.
+
+Properties batch 188, size 1
+Remaining timeout: 549.1936855316162
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0366398096084595.
+
+Properties batch 189, size 1
+Remaining timeout: 549.09730052948
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9998036026954651.
+
+Properties batch 190, size 1
+Remaining timeout: 549.0006861686707
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0443809032440186.
+
+Properties batch 191, size 1
+Remaining timeout: 548.8871431350708
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0026931762695312.
+
+Properties batch 192, size 1
+Remaining timeout: 548.7906048297882
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.051434874534607.
+
+Properties batch 193, size 1
+Remaining timeout: 548.6942708492279
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0087180137634277.
+
+Properties batch 194, size 1
+Remaining timeout: 548.5978806018829
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0561532974243164.
+
+Properties batch 195, size 1
+Remaining timeout: 548.4900205135345
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0247318744659424.
+
+Properties batch 196, size 1
+Remaining timeout: 548.3875524997711
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0596688985824585.
+
+Properties batch 197, size 1
+Remaining timeout: 548.2912034988403
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.04820716381073.
+
+Properties batch 198, size 1
+Remaining timeout: 548.1950223445892
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0599994659423828.
+
+Properties batch 199, size 1
+Remaining timeout: 548.0863573551178
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.059888243675232.
+
+Properties batch 200, size 1
+Remaining timeout: 547.9894297122955
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0503628253936768.
+
+Properties batch 201, size 1
+Remaining timeout: 547.8812906742096
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0385398864746094.
+
+Properties batch 202, size 1
+Remaining timeout: 547.7817351818085
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0534963607788086.
+
+Properties batch 203, size 1
+Remaining timeout: 547.6813871860504
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.040419578552246.
+
+Properties batch 204, size 1
+Remaining timeout: 547.584221124649
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0495076179504395.
+
+Properties batch 205, size 1
+Remaining timeout: 547.4744439125061
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0317585468292236.
+
+Properties batch 206, size 1
+Remaining timeout: 547.3597991466522
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0455279350280762.
+
+Properties batch 207, size 1
+Remaining timeout: 547.263824224472
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0272736549377441.
+
+Properties batch 208, size 1
+Remaining timeout: 547.168464422226
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0440040826797485.
+
+Properties batch 209, size 1
+Remaining timeout: 547.0700685977936
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0245016813278198.
+
+Properties batch 210, size 1
+Remaining timeout: 546.9653534889221
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0382169485092163.
+
+Properties batch 211, size 1
+Remaining timeout: 546.8624360561371
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0188994407653809.
+
+Properties batch 212, size 1
+Remaining timeout: 546.7604064941406
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0374114513397217.
+
+Properties batch 213, size 1
+Remaining timeout: 546.6619520187378
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0192517042160034.
+
+Properties batch 214, size 1
+Remaining timeout: 546.5612893104553
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0346373319625854.
+
+Properties batch 215, size 1
+Remaining timeout: 546.4586184024811
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0172326564788818.
+
+Properties batch 216, size 1
+Remaining timeout: 546.3519368171692
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0320525169372559.
+
+Properties batch 217, size 1
+Remaining timeout: 546.2428958415985
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.014048457145691.
+
+Properties batch 218, size 1
+Remaining timeout: 546.1385223865509
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0281589031219482.
+
+Properties batch 219, size 1
+Remaining timeout: 546.0135889053345
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0095648765563965.
+
+Properties batch 220, size 1
+Remaining timeout: 545.9151859283447
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0288752317428589.
+
+Properties batch 221, size 1
+Remaining timeout: 545.8096389770508
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0134739875793457.
+
+Properties batch 222, size 1
+Remaining timeout: 545.7042117118835
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0142943859100342.
+
+Properties batch 223, size 1
+Remaining timeout: 545.5994713306427
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9954017400741577.
+
+Properties batch 224, size 1
+Remaining timeout: 545.4920635223389
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0598742961883545.
+
+Properties batch 225, size 1
+Remaining timeout: 545.3890988826752
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0523653030395508.
+
+Properties batch 226, size 1
+Remaining timeout: 545.2930104732513
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0447298288345337.
+
+Properties batch 227, size 1
+Remaining timeout: 545.1969032287598
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.028485894203186.
+
+Properties batch 228, size 1
+Remaining timeout: 545.1007168292999
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.044147253036499.
+
+Properties batch 229, size 1
+Remaining timeout: 545.0039551258087
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.0284515619277954.
+
+Properties batch 230, size 1
+Remaining timeout: 544.9070792198181
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Remaining spec index tensor([0], device='cuda:0') with bounds tensor([[-1.06045425]], device='cuda:0') need to verify.
+torch allclose failed: norm 0.0004993652109988034
+Model prediction is: tensor([ 0.00000000,  0.00000000,  0.00000000,  ...,  0.00069427,
+        -0.00016369,  0.00022861], device='cuda:0')
+build_with_refined_bounds batch [1/1]
+setting alpha for layer /98 start_node /294 with alignment adjustment
+setting alpha for layer /100 start_node /294 with alignment adjustment
+setting alpha for layer /102 start_node /294 with alignment adjustment
+setting alpha for layer /114 start_node /294 with alignment adjustment
+setting alpha for layer /177/sqr start_node /294 with alignment adjustment
+setting alpha for layer /178/sqr start_node /294 with alignment adjustment
+setting alpha for layer /259/sqr start_node /294 with alignment adjustment
+setting alpha for layer /260/sqr start_node /294 with alignment adjustment
+setting alpha for layer /263/sqr start_node /294 with alignment adjustment
+setting alpha for layer /264/sqr start_node /294 with alignment adjustment
+setting alpha for layer /283/sqr start_node /294 with alignment adjustment
+setting alpha for layer /181 start_node /294 with alignment adjustment
+setting alpha for layer /182 start_node /294 with alignment adjustment
+setting alpha for layer /183 start_node /294 with alignment adjustment
+all alpha initialized
+true A is required, we do a full backward CROWN pass to obtain it
+(alpha-)CROWN with fixed intermediate bounds: tensor([[-1.06040549]], device='cuda:0', grad_fn=<ViewBackward0>) tensor([[-0.93532097]], device='cuda:0', grad_fn=<ViewBackward0>)
+Intermediate layers: /input,/input.3,/input.7,/113,/172,/174,/176,/181,/179,/180,/189,/194,/198,/202,/160,/294
+Keeping alphas for these layers: ['/294']
+Keeping alphas for these layers: ['/294']
+Node /98 input 0: size torch.Size([128]) unstable 31
+Node /100 input 0: size torch.Size([128]) unstable 33
+Node /102 input 0: size torch.Size([256]) unstable 72
+Node /114 input 0: size torch.Size([226]) unstable 226
+Node /179 input 0: size torch.Size([186]) unstable 183
+Node /180 input 0: size torch.Size([186]) unstable 183
+Node /181 input 0: size torch.Size([186]) unstable 186
+Node /181 input 1: size torch.Size([186]) unstable 186
+Node /182 input 0: size torch.Size([186]) unstable 186
+Node /182 input 1: size torch.Size([186]) unstable 186
+Node /183 input 0: size torch.Size([186]) unstable 186
+Node /183 input 1: size torch.Size([186]) unstable 186
+Node /177/sqr input 0: size torch.Size([186]) unstable 186
+Node /178/sqr input 0: size torch.Size([186]) unstable 186
+Node /259/sqr input 0: size torch.Size([186]) unstable 186
+Node /260/sqr input 0: size torch.Size([186]) unstable 186
+Node /263/sqr input 0: size torch.Size([186]) unstable 186
+Node /264/sqr input 0: size torch.Size([186]) unstable 186
+Node /283/sqr input 0: size torch.Size([118]) unstable 118
+-----------------
+# of unstable neurons: 3078
+-----------------
+
+BaB round 1
+batch: 1
+Start filtering...
+  0%|                                                                                                                 | 0/1 [00:00<?, ?it/s]100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 21.15it/s]
+kfsb choice: tensor([0], device='cuda:0')
+Filtering time: 0.05038785934448242
+Previous best: tensor(-0.00040448, device='cuda:0')
+Previous worst: tensor(-0.00040448, device='cuda:0')
+New worst: tensor(-0.00039303, device='cuda:0')
+Average branched neurons at iteration 1:  1.0000
+splitting decisions: 
+split level 0: [/input, 15] 
+****** iter [0] loss: 2.120767116546631, lr: 0.5 pruning_in_iteration open status: None
+****** iter [1] loss: 2.1204304695129395, lr: 0.49 pruning_in_iteration open status: None
+****** iter [2] loss: 2.120248317718506, lr: 0.48019999999999996 pruning_in_iteration open status: None
+****** iter [3] loss: 2.120149612426758, lr: 0.47059599999999996 pruning_in_iteration open status: None
+****** iter [4] loss: 2.1200942993164062, lr: 0.46118407999999994 pruning_in_iteration open status: None
+****** iter [5] loss: 2.1200621128082275, lr: 0.4519603983999999 pruning_in_iteration open status: None
+****** iter [6] loss: 2.120042562484741, lr: 0.4429211904319999 pruning_in_iteration open status: None
+****** iter [7] loss: 2.120030164718628, lr: 0.4340627666233599 pruning_in_iteration open status: None
+****** iter [8] loss: 2.1200220584869385, lr: 0.4253815112908927 pruning_in_iteration open status: None
+****** iter [9] loss: 2.120016574859619, lr: 0.41687388106507484 pruning_in_iteration open status: None
+
+Time: prepare 0.0010    bound 0.7283    transfer 0.0005    finalize 0.0011    func 0.7310    
+Accumulated time: func 0.7310    prepare 0.0011    bound 0.7283    transfer 0.0005    finalize 0.0011    
+Current worst splitting domains lb-rhs (depth):
+-0.00001 (1), -0.00001 (1), 
+length of domains: 2
+Time: pickout 0.0020    decision 0.1629    set_bounds 0.0015    solve 0.7310    add 0.0024    
+Accumulated time: pickout 0.0020    decision 0.1629    set_bounds 0.0015    solve 0.7310    add 0.0024    
+Sorting batched domains takes 0.0010960102081298828 seconds.
+Current (lb-rhs): -7.748603820800781e-06
+2 domains visited
+Cumulative time: 1.0171480178833008
+
+BaB round 2
+batch: 2
+Start filtering...
+  0%|                                                                                                                 | 0/1 [00:00<?, ?it/s]100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████| 1/1 [00:00<00:00, 15.88it/s]
+kfsb choice: tensor([0, 1], device='cuda:0')
+Filtering time: 0.0672757625579834
+Previous best: tensor(-6.91413879e-06, device='cuda:0')
+Previous worst: tensor(-7.74860382e-06, device='cuda:0')
+New worst: tensor(-7.39097595e-06, device='cuda:0')
+Average branched neurons at iteration 2:  1.0000
+splitting decisions: 
+split level 0: [/input.3, 37] [/input, 97] 
+****** iter [0] loss: 4.2400288581848145, lr: 0.5 pruning_in_iteration open status: None
+****** iter [1] loss: 4.24001407623291, lr: 0.49 pruning_in_iteration open status: None
+****** iter [2] loss: 3.180006504058838, lr: 0.48019999999999996 pruning_in_iteration open status: None
+****** iter [3] loss: 3.1800031661987305, lr: 0.47059599999999996 pruning_in_iteration open status: None
+****** iter [4] loss: 0.0, lr: 0.46118407999999994 pruning_in_iteration open status: None
+
+all verified at 4th iter
+
+Time: prepare 0.0024    bound 0.3332    transfer 0.0005    finalize 0.0014    func 0.3375    
+Accumulated time: func 1.0685    prepare 0.0037    bound 1.0615    transfer 0.0010    finalize 0.0026    
+length of domains: 0
+Time: pickout 0.0020    decision 0.6499    set_bounds 0.0024    solve 0.3376    add 0.0002    
+Accumulated time: pickout 0.0040    decision 0.8128    set_bounds 0.0040    solve 1.0686    add 0.0025    
+No domains left, verification finished!
+Current (lb-rhs): 1.0000000116860974e-07
+2 domains visited
+Cumulative time: 2.009425640106201
+
+
+Properties batch 231, size 1
+Remaining timeout: 542.353119134903
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.9562427997589111.
+
+Properties batch 232, size 1
+Remaining timeout: 542.2428729534149
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0368512868881226.
+
+Properties batch 233, size 1
+Remaining timeout: 542.1467015743256
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 1.01844322681427.
+
+Properties batch 234, size 1
+Remaining timeout: 542.0504055023193
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([-1.06000102], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound -1.0331405401229858.
+
+Properties batch 235, size 1
+Remaining timeout: 541.9540243148804
+##### Instance 0 first 10 spec matrices: 
+tensor([[[0., 0., 0.,  ..., 0., 0., 0.]]], dtype=torch.float64)
+thresholds: tensor([0.93999898], device='cuda:0') ######
+Initial alpha-CROWN verified for spec index tensor([0], device='cuda:0') with bound 0.949526846408844.
+Result: safe in 58.1435 seconds
+############# Summary #############
+Final verified acc: 100.0% (total 1 examples)
+Problem instances count: 1 , total verified (safe/unsat): 1 , total falsified (unsafe/sat): 0 , timeout: 0
+mean time for ALL instances (total 1):58.14290220974133, max time: 58.14348363876343
+mean time for verified SAFE instances(total 1): 58.14348363876343, max time: 58.14348363876343
+safe (total 1), index: [0]
